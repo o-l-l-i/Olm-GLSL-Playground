@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GLSL Playground</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="editor-panel">
+
+            <div class="editor-header">Olm GLSL Playground <a href="https://github.com/o-l-l-i">Developed by o-l-l-i</a>
+                <button id="openReadme" class="readme-btn">About/Help</button>
+                <button id="resetShaders" class="reset-btn">Reset Shaders</button>
+            </div>
+
+            <div class="preset-loader">
+                <label for="presetSelect">Load Preset:</label>
+                <select id="presetSelect">
+                </select>
+            </div>
+
+            <section class="editor-section">
+
+                <h2>Display Shader</h2>
+                <div id="displayEditor"></div>
+
+                <div class="texture-row">
+                    <div class="texture-controls">
+                        <div class="texture-inputs">
+                            <label>
+                                Texture A:
+                                <input type="file" id="uploadTextureA" />
+                                <input id="textureNameA" readonly />
+                            </label>
+                            <button type="button" class="reset-btn" data-texture="A">Reset</button>
+                        </div>
+                        <label>Texture A Wrap:
+                            <select id="wrapModeA">
+                                <option value="REPEAT">Repeat</option>
+                                <option value="CLAMP_TO_EDGE" selected>Clamp to Edge</option>
+                                <option value="MIRRORED_REPEAT">Mirrored Repeat</option>
+                            </select>
+                        </label>
+                        <img id="texturePreviewA" width="64" height="64" />
+                    </div>
+
+                    <div class="texture-controls">
+                        <div class="texture-inputs">
+                            <label>
+                                Texture B:
+                                <input type="file" id="uploadTextureB" />
+                                <input id="textureNameB" readonly />
+                            </label>
+                            <button type="button" class="reset-btn" data-texture="B">Reset</button>
+                        </div>
+                        <label>Texture B Wrap:
+                            <select id="wrapModeB">
+                                <option value="REPEAT">Repeat</option>
+                                <option value="CLAMP_TO_EDGE" selected>Clamp to Edge</option>
+                                <option value="MIRRORED_REPEAT">Mirrored Repeat</option>
+                            </select>
+                        </label>
+                        <img id="texturePreviewB" width="64" height="64" />
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="editor-section">
+                <h2>Simulation Shader</h2>
+                <div id="simEditor"></div>
+            </section>
+        </div>
+
+        <div class="canvas-panel">
+
+            <div class="canvas-header">Shader Output</div>
+
+            <div class="canvas-container">
+                <canvas id="glCanvas" width="512" height="512"></canvas>
+                <div id="canvasInfo"></div>
+                <div id="errorPanel">
+                    <div id="errorContent">
+                    </div>
+                    <button id="errorCloseBtn" aria-label="Close errors">&times;</button>
+                </div>
+            </div>
+
+        </div>
+
+    <div id="readmeModal" class="modal">
+        <div class="modal-content">
+            Readme
+            <span class="close-button">&times;</span>
+            <div id="readmeContent"></div>
+        </div>
+    </div>
+
+    </div>
+
+    <script type="module" src="./main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.0/mode-glsl.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.0/theme-monokai.js"></script>
+
+</body>
+
+</html>

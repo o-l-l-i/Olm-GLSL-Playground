@@ -1,0 +1,373 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#editor,
+#lineNumbers,
+#shaderTextarea,
+#errorPanel,
+#canvasInfo {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+a:link {
+  color: rgb(107, 150, 230);
+}
+
+a:visited {
+  color: lch(54.49% 87.95 308.01);
+}
+
+a:hover {
+  color: hotpink;
+}
+
+a:active {
+  color: blue;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+
+.ace_content {
+  line-height: 1.5 !important;
+  white-space: pre-wrap !important;
+}
+
+.ace_marker-layer .error-highlight {
+  background-color: rgba(255, 107, 107, 0.2);
+  position: absolute;
+  z-index: 20;
+}
+
+.editor-panel {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #3e3e3e;
+  padding: 12px;
+  gap: 5px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.editor-header {
+  background: #2d2d30;
+  padding: 12px 16px;
+  border-bottom: 1px solid #3e3e3e;
+  font-weight: 600;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editor-section {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-section h2 {
+  margin: 0 0 6px 0;
+  font-size: 1.2em;
+  color: #eee;
+  font-family: "JetBrains Mono", monospace;
+}
+
+#displayEditor,
+#simEditor {
+  flex-grow: 1;
+  min-height: 200px;
+  width: 100%;
+  border: 1px solid #333;
+  margin-bottom: 20px;
+}
+
+.texture-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+
+.texture-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .texture-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .texture-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #texturePreviewA,
+  #texturePreviewB {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
+.texture-inputs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+#texturePreviewA,
+#texturePreviewB {
+  border: 1px solid #ccc;
+  margin: 10px;
+}
+
+.reset-btn {
+  width: fit-content;
+  padding: 5px 20px;
+  font-size: 0.85rem;
+  background-color: #ae81ff;
+  color: white;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.reset-btn:hover {
+  background-color: #aa2222;
+}
+
+.canvas-panel {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  background: #2d2d30;
+}
+
+.canvas-header {
+  background: #2d2d30;
+  padding: 12px 16px;
+  border-bottom: 1px solid #3e3e3e;
+  font-weight: 600;
+}
+
+.canvas-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1e1e1e;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .editor-panel,
+  .canvas-panel {
+    width: 100%;
+    height: auto;
+  }
+}
+
+#glCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  border: 1px solid #3e3e3e;
+}
+
+#canvasInfo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+#errorPanel {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #2d1b1b;
+  border-top: 2px solid #ff6b6b;
+  padding: 2rem 1rem 1rem 1rem;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.2s ease;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#errorPanel.show {
+  max-height: 200px;
+  transform: scaleY(1);
+  transform-origin: bottom;
+  transition: transform 0.2s ease;
+  transition-delay: 0s;
+  padding: 16px;
+  pointer-events: auto;
+}
+
+.error-item {
+  margin-bottom: 12px;
+  padding: 8px;
+  background: rgba(255, 107, 107, 0.1);
+  border-left: 3px solid #ff6b6b;
+  border-radius: 4px;
+}
+
+.error-line {
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #ff6b6b;
+}
+
+.error-message {
+  color: #ffcccc;
+}
+
+#errorCloseBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #ff6b6b;
+  cursor: pointer;
+  user-select: none;
+}
+
+input[type="file"] {
+  color: transparent;
+  width: 160px;
+}
+
+input[type="file"]::file-selector-button {
+  color: black;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="file"]:hover::file-selector-button {
+  background: #e0e0e0;
+}
+
+.ace_marker-layer .ace_error {
+  position: absolute;
+  background: rgba(255, 0, 0, 0.2);
+  z-index: 20;
+}
+
+.ace_line.ace_error {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.ace-monokai .ace_invalid {
+  background-color: rgba(255, 0, 0, 0.3) !important;
+  color: white !important;
+  border-radius: 3px;
+}
+
+.ace_marker-layer .error-line-highlight {
+  background-color: rgba(255, 100, 100, 0.2);
+  position: absolute;
+  z-index: 20;
+  width: 100%;
+}
+
+.ace_gutter-cell.ace_error {
+  color: red !important;
+  background-color: transparent !important;
+}
+
+.ace_error {
+  color: red !important;
+}
+
+.readme-btn {
+  width: fit-content;
+  padding: 5px 20px;
+  font-size: 0.85rem;
+  background-color: #ae81ff;
+  color: white;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.readme-btn:hover {
+  background-color: #39aa22;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  background-color: #1e1e1e;
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 800px;
+  color: #ddd;
+  font-family: sans-serif;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.close-button:hover {
+  color: #fff;
+}
